@@ -12,11 +12,18 @@ function edd_ftbg_add_misc_settings( $settings ) {
 
 	$new_settings = array(
 
+		'edd_ftbg_settings' => array(
+			'id' => 'edd_ftbg_settings',
+			'name' => '<strong>' . __( 'First Time Buyer\'s Gift', 'edd' ) . '</strong>',
+			'desc' => __( 'Configure the discount settings for the gist a customer receives after their first purchase.', 'edd' ),
+			'type' => 'header'
+		),
 		'edd_ftbg_first_time_buyer_discount_amount' => array(
 			'id' => 'edd_ftbg_first_time_buyer_discount_amount',
 			'name' => __( 'First-time Buyer Discount', 'edd' ),
 			'desc' => __( 'A discount to gift first-time buyers after their first purchase.', 'edd' ),
 			'type' => 'number',
+			'size' => 'small'
 		),
 		'edd_ftbg_first_time_buyer_discount_type' => array(
 			'id' => 'edd_ftbg_first_time_buyer_discount_type',

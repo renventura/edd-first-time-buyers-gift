@@ -8,7 +8,6 @@
  * Author: Ren Ventura
  * Author URI: http://www.engagewp.com/
  *
- *
  * License: GPL 2.0+
  * License URI: http://www.opensource.org/licenses/gpl-license.php
  *
@@ -16,7 +15,7 @@
 
  /*
 
-	Copyright 2015  Ren Ventura
+	Copyright 2015  Ren Ventura, EngageWP.com
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License, version 2, as
@@ -44,7 +43,7 @@
 //* Plugin constants
 define( 'EDD_FTBG_VERSION', '1.0' );
 define( 'EDD_FTBG_PLUGIN_FILE', __FILE__ );
-define( 'EDD_FTBG_PLUGIN_BASENAME', untrailingslashit( plugin_basename( __FILE__ ) ) ); # 'edd-first-time-buyers-gift/edd-first-time-buyers-gift.php'
+define( 'EDD_FTBG_PLUGIN_BASENAME', untrailingslashit( plugin_basename( __FILE__ ) ) );
 
 //* Include required files
 require_once 'includes/admin/register-settings.php';
@@ -63,7 +62,9 @@ function edd_ftbg_plugin_activate() {
 
 }
 
-/*add_action( 'genesis_before_header', function() {
+/*
+//* Development output
+add_action( 'genesis_before_header', function() {
 
 	$user_id = intval( get_post_meta( 2038, '_edd_payment_user_id', true ) );
 
@@ -75,7 +76,8 @@ function edd_ftbg_plugin_activate() {
 
 	echo '</pre>';
 
-} );*/
+} );
+*/
 
 class EDD_First_Time_Buyers_Gift {
 
