@@ -1,10 +1,11 @@
 <?php
 
 /**
- * Delete options when the plugin is deleted
+ *	Delete options when the plugin is deleted
  *
- * @package EDD First Time Buyer's Gift
- * @author Ren Ventura
+ *	@package EDD First Time Buyer's Gift
+ *	@since 1.0
+ *	@author Ren Ventura
  */
 
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) )

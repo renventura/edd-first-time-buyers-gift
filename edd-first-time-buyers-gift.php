@@ -47,6 +47,7 @@ define( 'EDD_FTBG_PLUGIN_BASENAME', untrailingslashit( plugin_basename( __FILE__
 
 //* Include required files
 require_once 'includes/admin/register-settings.php';
+include_once 'includes/admin/shortcodes.php';
 
 //* Check to see if EDD is active and bail if not
 register_activation_hook( __FILE__, 'edd_ftbg_plugin_activate' );
@@ -62,23 +63,10 @@ function edd_ftbg_plugin_activate() {
 
 }
 
-/*
-//* Development output
-add_action( 'genesis_before_header', function() {
-
-	$user_id = intval( get_post_meta( 2038, '_edd_payment_user_id', true ) );
-
-	$user_purchases = edd_count_purchases_of_customer( $user_id );
-
-	echo '<pre>';
-
-	print_r( get_post_meta( 2038 ) );
-
-	echo '</pre>';
-
-} );
-*/
-
+/**
+ *	Create a discount for buyers after their first purchase
+ *	@since 1.0
+ */
 class EDD_First_Time_Buyers_Gift {
 
 	private $user_id, $user_email, $user_purchases, $discount_code;
@@ -90,9 +78,8 @@ class EDD_First_Time_Buyers_Gift {
 	}
 
 	/**
-	 * If the user has no more than one purchase (/includes/payments/actions.php)
-	 *
-	 * @param $payment_id
+	 *	If the user has no more than one purchase (/includes/payments/actions.php)
+	 *	@param $payment_id
 	 */
 	public function edd_ftbg_register_discount( $payment_id ) {
 
@@ -101,12 +88,12 @@ class EDD_First_Time_Buyers_Gift {
 		$this->user_email = get_post_meta( $payment_id, '_edd_payment_user_email', true );
 
 		/**
-		 * Get number of purchases of the customer (/includes/user-functions.php)
+		 *	Get number of purchases of the customer (/includes/user-functions.php)
 		 *
-		 * Returns total number of purchases a customer has made
+		 *	Returns total number of purchases a customer has made
 		 *
-		 * @param       $user mixed - ID or email
-		 * @return      int - the total number of purchases
+		 *	@param       $user mixed - ID or email
+		 *	@return      int - the total number of purchases
 		 */
 		$this->user_purchases = edd_count_purchases_of_customer( $this->user_id );
 
@@ -145,8 +132,5 @@ class EDD_First_Time_Buyers_Gift {
 
 }
 
+//* Instantiate the class
 $EDD_FTBG = new EDD_First_Time_Buyers_Gift;
-
-
-
-
