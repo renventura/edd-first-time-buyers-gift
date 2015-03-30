@@ -109,7 +109,7 @@ class EDD_First_Time_Buyers_Gift {
 
 			//* Assemble the discount
 			$args = array(
-				'name'       => $user_email,
+				'name'       => $this->user_email,
 				'code'       => $this->discount_code,
 				'max'        => 1,
 				'amount'     => edd_get_option( 'edd_ftbg_first_time_buyer_discount_amount' ),
