@@ -12,6 +12,10 @@
 add_shortcode( 'edd_ftbg_gift_notice', 'edd_ftbg_gift_notice_shortcode' );
 function edd_ftbg_gift_notice_shortcode() {
 
+	//* Don't run if user isn't logged in
+	if ( ! is_user_logged_in() )
+		return;
+
 	// Get the current user's email
 	global $current_user;
 	$user_email = $current_user->user_email;
@@ -19,11 +23,12 @@ function edd_ftbg_gift_notice_shortcode() {
 	// Hash the email to get the code
 	$code = substr( md5( $user_email ), 0, 18 );
 
-	// Get the discount's name
-	$discount_name = get_post_meta( intval( edd_get_discount_id_by_code( $code ) ), '_edd_discount_name', true );
+	// Get the discount's ID and name
+	$discount_id = edd_get_discount_id_by_code( $code );
+	$discount_name = get_post_meta( $discount_id, '_edd_discount_name', true );
 
-	// If code exists and the discount's name is the user's email, the code belongs to the user
-	if ( edd_get_discount_by_code( $code ) && $discount_name == $user_email ) {
+	// If discount exists, is active and the name equals the user's email, output the notice
+	if ( $discount_id && edd_is_discount_active( $discount_id ) && $discount_name == $user_email ) {
 
 		ob_start(); ?>
 
