@@ -108,7 +108,7 @@ class EDD_First_Time_Buyers_Gift {
 				return;
 
 			//* Assemble the discount
-			$args = array(
+			$default_discount_args = array(
 				'name'       => $this->user_email,
 				'code'       => $this->discount_code,
 				'max'        => 1,
@@ -118,7 +118,11 @@ class EDD_First_Time_Buyers_Gift {
 				'use_once'   => true
 			);
 
-			$discount_id = edd_store_discount( apply_filters( 'edd_ftbg_discount_args', $args ) );
+			//* Allow the default discount args to be filtered
+			$args = wp_parse_args( apply_filters( 'edd_ftbg_discount_args', $args ), $default_discount_args );
+
+			//* Create/save the discount
+			$discount_id = edd_store_discount( $args );
 
 			//* After the discount has been created
 			$user_id = $this->user_id;
