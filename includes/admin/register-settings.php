@@ -39,11 +39,27 @@ function edd_ftbg_add_misc_settings( $settings ) {
 			'type' => 'header'
 		),
 
+		'edd_ftbg_enable_gifts' => array(
+			'id' => 'edd_ftbg_enable_gifts',
+			'name' => __( 'Enable', 'edd' ),
+			'desc' => __( 'This will enable discount gifts to your first-time customers.', 'edd' ),
+			'type' => 'checkbox'
+		),
+
+		//* Minimum total to receive a discount
+		'edd_ftbg_first_time_buyer_min_total' => array(
+			'id' => 'edd_ftbg_first_time_buyer_min_total',
+			'name' => __( 'Minimum Total', 'edd' ),
+			'desc' => __( 'The mimumin total a first-time customer must spend to receive the discount; <strong>default 1.00</strong>.', 'edd' ),
+			'type' => 'number',
+			'size' => 'small'
+		),
+
 		//* Discount amount input
 		'edd_ftbg_first_time_buyer_discount_amount' => array(
 			'id' => 'edd_ftbg_first_time_buyer_discount_amount',
 			'name' => __( 'First-time Buyer Discount', 'edd' ),
-			'desc' => __( 'A discount to gift first-time buyers after their first purchase.', 'edd' ),
+			'desc' => __( 'A discount to gift first-time buyers after their first purchase; <strong>default 1.00</strong>.', 'edd' ),
 			'type' => 'number',
 			'size' => 'small'
 		),
@@ -52,7 +68,7 @@ function edd_ftbg_add_misc_settings( $settings ) {
 		'edd_ftbg_first_time_buyer_discount_type' => array(
 			'id' => 'edd_ftbg_first_time_buyer_discount_type',
 			'name' => __( 'Discount Type', 'edd' ),
-			'desc' => __( 'Discount type for first-time buyer discount - flat discount or percentage.', 'edd' ),
+			'desc' => __( 'Discount type for first-time buyer discount - flat or percentage; <strong>default "flat"</strong>.', 'edd' ),
 			'type' => 'select',
 			'options' => array(
 				'flat' => __( 'Flat', 'edd' ),
