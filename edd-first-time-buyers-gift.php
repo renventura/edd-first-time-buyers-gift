@@ -109,7 +109,7 @@ class EDD_First_Time_Buyers_Gift {
 
 			//* Assemble the discount
 			$args = array(
-				'name'       => $this->user_email,
+				'name'       => $user_email,
 				'code'       => $this->discount_code,
 				'max'        => 1,
 				'amount'     => edd_get_option( 'edd_ftbg_first_time_buyer_discount_amount' ),
@@ -119,6 +119,11 @@ class EDD_First_Time_Buyers_Gift {
 			);
 
 			$discount_id = edd_store_discount( apply_filters( 'edd_ftbg_discount_args', $args ) );
+
+			//* After the discount has been created
+			$user_id = $this->user_id;
+			$discount_code = $this->discount_code;
+			do_action( 'edd_ftbg_after_discount_registered', $user_id, $discount_code );
 
 		}
 
