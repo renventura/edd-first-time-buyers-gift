@@ -17,7 +17,7 @@ function edd_ftbg_add_misc_settings( $settings ) {
 	//* Prepare the instructions for creating a custom gift message
 	ob_start(); ?>
 
-	<p><?php printf( '%1$s <strong>%2$s</strong> %3$s.', __( 'Write a custom message your customers will see when they have a discount available. Display the notice anywhere via the', 'edd' ), __( '[gift_notice]', 'edd' ), __( 'shortcode' ) ); ?></p>
+	<p><?php printf( '%1$s <strong>%2$s</strong> %3$s.', __( 'Write a custom message your customers will see when they have a discount available. Display the notice anywhere via the', 'edd' ), __( '[edd_ftbg_gift_notice]', 'edd' ), __( 'shortcode' ) ); ?></p>
 
 	<br/>
 

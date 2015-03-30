@@ -9,7 +9,7 @@
  */
 
 //* Display a message to customers with a discount
-add_shortcode( 'gift_notice', 'edd_ftbg_gift_notice_shortcode' );
+add_shortcode( 'edd_ftbg_gift_notice', 'edd_ftbg_gift_notice_shortcode' );
 function edd_ftbg_gift_notice_shortcode() {
 
 	// Get the current user's email
