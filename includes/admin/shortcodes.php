@@ -12,7 +12,7 @@
 add_shortcode( 'edd_ftbg_gift_notice', 'edd_ftbg_gift_notice_shortcode' );
 function edd_ftbg_gift_notice_shortcode() {
 
-	//* Don't run if user isn't logged in
+	// Show nothing if user isn't logged in
 	if ( ! is_user_logged_in() )
 		return;
 
