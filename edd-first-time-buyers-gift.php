@@ -40,29 +40,6 @@
 
 */
 
-//* Plugin constants
-define( 'EDD_FTBG_VERSION', '1.0' );
-define( 'EDD_FTBG_PLUGIN_FILE', __FILE__ );
-define( 'EDD_FTBG_PLUGIN_BASENAME', untrailingslashit( plugin_basename( __FILE__ ) ) );
-
-//* Include required files
-require_once 'includes/admin/register-settings.php';
-include_once 'includes/admin/shortcodes.php';
-
-//* Check to see if EDD is active and bail if not
-register_activation_hook( __FILE__, 'edd_ftbg_plugin_activate' );
-function edd_ftbg_plugin_activate() {
-
-	if ( ! is_plugin_active( 'easy-digital-downloads/easy-digital-downloads.php' ) ) {
-
-		deactivate_plugins( EDD_FTBG_PLUGIN_BASENAME );
-
-		wp_die( sprintf( __( 'The EDD First Time Buyer\'s Gift requires Easy Digital Downloads to be active.', 'edd' ) ) );
-
-	}
-
-}
-
 /**
  *	Create a discount for buyers after their first purchase
  *	@since 1.0
@@ -73,15 +50,46 @@ class EDD_First_Time_Buyers_Gift {
 
 	public function __construct() {
 
+		//* Plugin constants
+		define( 'EDD_FTBG_VERSION', '1.0' );
+		define( 'EDD_FTBG_PLUGIN_FILE', __FILE__ );
+		define( 'EDD_FTBG_PLUGIN_BASENAME', untrailingslashit( plugin_basename( __FILE__ ) ) );
+
+		//* Include required files
+		require_once 'includes/functions.php';
+		require_once 'includes/admin/register-settings.php';
+		include_once 'includes/admin/shortcodes.php';
+
+		//* Make sure EDD is running, bail if not
+		register_activation_hook( __FILE__, array( $this, 'edd_ftbg_plugin_activate' ) );
+
+		//* Run process after a purchase is made
 		add_action( 'edd_complete_purchase', array( $this, 'edd_ftbg_register_discount' ) );
 
 	}
 
+	//* Check to see if EDD is active and bail if not
+	public function edd_ftbg_plugin_activate() {
+
+		if ( ! is_plugin_active( 'easy-digital-downloads/easy-digital-downloads.php' ) ) {
+
+			deactivate_plugins( EDD_FTBG_PLUGIN_BASENAME );
+
+			wp_die( sprintf( __( 'The EDD First Time Buyer\'s Gift requires Easy Digital Downloads to be active.', 'edd' ) ) );
+
+		}
+
+	}
+
 	/**
-	 *	If the user has no more than one purchase (/includes/payments/actions.php)
+	 *	Register the discount (/includes/payments/actions.php)
 	 *	@param $payment_id
 	 */
 	public function edd_ftbg_register_discount( $payment_id ) {
+
+		//* Bail if the functionality is not enabled
+		if ( ! is_edd_ftbg_enabled() )
+			return;
 
 		//* Get some info about the buyer
 		$this->user_id = intval( get_post_meta( $payment_id, '_edd_payment_user_id', true ) );
@@ -97,8 +105,11 @@ class EDD_First_Time_Buyers_Gift {
 		 */
 		$this->user_purchases = edd_count_purchases_of_customer( $this->user_id );
 
-		//* Add the discount if buyer has not purchased before
-		if ( $this->user_purchases < 1 ) {
+		/**
+		 *	Add the discount if buyer has not purchased before and the purchase is at least as much as the mimium total required
+		 *	Purchases must equal 1 because this runs after the first purchase, which makes the total number of purchases equal to 1
+		 */
+		if ( $this->user_purchases == 1 && edd_get_payment_amount( $payment_id ) >= edd_get_option( 'edd_ftbg_first_time_buyer_min_total' ) ) {
 
 			//* Generate 18 character code
 			$this->discount_code = substr( md5( $this->user_email ), 0, 18 );
@@ -107,15 +118,20 @@ class EDD_First_Time_Buyers_Gift {
 			if ( edd_get_discount_by_code( $this->discount_code ) )
 				return;
 
+			//* Default settings
+			$amount = !edd_get_option( 'edd_ftbg_first_time_buyer_discount_amount' ) ? 1 : edd_get_option( 'edd_ftbg_first_time_buyer_discount_amount' );
+			$type = !edd_get_option( 'edd_ftbg_first_time_buyer_discount_type' ) ? 'flat' : edd_get_option( 'edd_ftbg_first_time_buyer_discount_type' );
+
 			//* Assemble the discount
-			$default_discount_args = array(
-				'name'       => $this->user_email,
-				'code'       => $this->discount_code,
-				'max'        => 1,
-				'amount'     => edd_get_option( 'edd_ftbg_first_time_buyer_discount_amount' ),
-				'start'      => '-1 day',
-				'type'       => edd_get_option( 'edd_ftbg_first_time_buyer_discount_type' ),
-				'use_once'   => true
+			$default_discount_args = array( # does not include required/excluded products or expiration date
+				'name' => $this->user_email,
+				'code' => $this->discount_code,
+				'type' => $type,
+				'amount' => $amount,
+				'start'  => '-1 day',
+				'max' => 1,
+				//'min_price' => $min_price,
+				'use_once' => true
 			);
 
 			//* Allow the default discount args to be filtered
