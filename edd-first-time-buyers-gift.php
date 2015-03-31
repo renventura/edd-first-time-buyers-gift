@@ -96,7 +96,7 @@ class EDD_First_Time_Buyers_Gift {
 		$this->user_email = get_post_meta( $payment_id, '_edd_payment_user_email', true );
 
 		/**
-		 *	Get number of purchases of the customer (/includes/user-functions.php)
+		 *	Get number of purchases of the buyer (/includes/user-functions.php)
 		 *
 		 *	Returns total number of purchases a customer has made
 		 *
@@ -107,7 +107,7 @@ class EDD_First_Time_Buyers_Gift {
 
 		/**
 		 *	Add the discount if buyer has not purchased before and the purchase is at least as much as the mimium total required
-		 *	Purchases must equal 1 because this runs after the first purchase, which makes the total number of purchases equal to 1
+		 *	Existing purchases must equal 1 because this process runs after a customer's first purchase, which makes the total number of purchases equal to 1
 		 */
 		if ( $this->user_purchases == 1 && edd_get_payment_amount( $payment_id ) >= edd_get_option( 'edd_ftbg_first_time_buyer_min_total' ) ) {
 
@@ -123,15 +123,20 @@ class EDD_First_Time_Buyers_Gift {
 			$type = !edd_get_option( 'edd_ftbg_first_time_buyer_discount_type' ) ? 'flat' : edd_get_option( 'edd_ftbg_first_time_buyer_discount_type' );
 
 			//* Assemble the discount
-			$default_discount_args = array( # does not include required/excluded products or expiration date
+			$default_discount_args = array(
 				'name' => $this->user_email,
 				'code' => $this->discount_code,
 				'type' => $type,
 				'amount' => $amount,
 				'start'  => '-1 day',
 				'max' => 1,
-				//'min_price' => $min_price,
-				'use_once' => true
+				'use_once' => true,
+				//'min_price' => '', # min price for the discount to be applied
+				//'product_reqs'      => array(), # IDs of products that are required to use the discount
+				//'product_condition' => '', # any or all pertaining to the required products
+				//'is_not_global' => '', # 0 for specific products or 1 for entire purchase
+				//'status' => '', # active or inactive
+				//'excluded_products' => array() # IDs of products the discount cannot be used on
 			);
 
 			//* Allow the default discount args to be filtered
