@@ -40,6 +40,7 @@ function edd_ftbg_add_misc_settings( $settings ) {
 			'type' => 'header'
 		),
 
+		//* Enable the functionality
 		'edd_ftbg_enable_gifts' => array(
 			'id' => 'edd_ftbg_enable_gifts',
 			'name' => __( 'Enable', 'edd' ),
