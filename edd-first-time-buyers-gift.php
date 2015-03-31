@@ -40,13 +40,18 @@
 
 */
 
+//* Include required files
+require_once 'includes/functions.php';
+require_once 'includes/admin/register-settings.php';
+include_once 'includes/admin/shortcodes.php';
+
 /**
- *	Create a discount for buyers after their first purchase
+ *	Main plugin class
  *	@since 1.0
  */
 class EDD_First_Time_Buyers_Gift {
 
-	private $user_id, $user_email, $user_purchases, $discount_code;
+	private $user_id, $user_email, $user_purchases, $discount_id, $discount_code;
 
 	public function __construct() {
 
@@ -55,20 +60,17 @@ class EDD_First_Time_Buyers_Gift {
 		define( 'EDD_FTBG_PLUGIN_FILE', __FILE__ );
 		define( 'EDD_FTBG_PLUGIN_BASENAME', untrailingslashit( plugin_basename( __FILE__ ) ) );
 
-		//* Include required files
-		require_once 'includes/functions.php';
-		require_once 'includes/admin/register-settings.php';
-		include_once 'includes/admin/shortcodes.php';
-
 		//* Make sure EDD is running, bail if not
 		register_activation_hook( __FILE__, array( $this, 'edd_ftbg_plugin_activate' ) );
 
 		//* Run process after a purchase is made
 		add_action( 'edd_complete_purchase', array( $this, 'edd_ftbg_register_discount' ) );
 
+		//* Allow the user's custom notice to be used in emails
+		add_action( 'edd_add_email_tags', array( $this, 'edd_ftbg_add_email_tag' ), 999 );
+
 	}
 
-	//* Check to see if EDD is active and bail if not
 	public function edd_ftbg_plugin_activate() {
 
 		if ( ! is_plugin_active( 'easy-digital-downloads/easy-digital-downloads.php' ) ) {
@@ -86,10 +88,6 @@ class EDD_First_Time_Buyers_Gift {
 	 *	@param $payment_id
 	 */
 	public function edd_ftbg_register_discount( $payment_id ) {
-
-		//* Bail if the functionality is not enabled
-		if ( ! is_edd_ftbg_enabled() )
-			return;
 
 		//* Get some info about the buyer
 		$this->user_id = intval( get_post_meta( $payment_id, '_edd_payment_user_id', true ) );
@@ -143,7 +141,7 @@ class EDD_First_Time_Buyers_Gift {
 			$args = wp_parse_args( apply_filters( 'edd_ftbg_discount_args', $args ), $default_discount_args );
 
 			//* Create/save the discount
-			$discount_id = edd_store_discount( $args );
+			$this->discount_id = edd_store_discount( $args );
 
 			//* After the discount has been created
 			$user_id = $this->user_id;
@@ -154,13 +152,29 @@ class EDD_First_Time_Buyers_Gift {
 
 	}
 
-	public function edd_ftbg_get_discount() {
+	public function edd_ftbg_add_email_tag() {
 
-		return $this->discount_code;
+		edd_add_email_tag( 'edd_ftbg_gift_notice', 'Insert the custom message you entered to display an eligible first-time buyer\'s discount code and message.', array( $this, 'edd_ftbg_add_email_tag_callback' ) );
+
+	}
+
+	public function edd_ftbg_add_email_tag_callback() {
+
+		return do_shortcode( '[edd_ftbg_gift_notice]' );
 
 	}
 
 }
 
-//* Instantiate the class
-$EDD_FTBG = new EDD_First_Time_Buyers_Gift;
+/**
+ *	Run the functionality if the setting is enabled
+ *	@since 1.0
+ */
+add_action( 'plugins_loaded', 'edd_ftbg_run_if_enabled' );
+function edd_ftbg_run_if_enabled() {
+
+	//* Instantiate the class
+	if ( is_edd_ftbg_enabled() )
+		$EDD_FTBG = new EDD_First_Time_Buyers_Gift;
+
+}

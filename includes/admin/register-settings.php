@@ -25,6 +25,7 @@ function edd_ftbg_add_misc_settings( $settings ) {
 
 	<ul>
 		<li><?php _e( '{code} - Outputs the user\'s discount code', 'edd' ); ?></li>
+		<li><?php _e( '{formatted_discount} - Outputs the formatted discount value (i.e. 15% or $10)', 'edd' ); ?></li>
 	</ul>
 
 	<?php $custom_description_instructions = ob_get_clean();
@@ -87,16 +88,5 @@ function edd_ftbg_add_misc_settings( $settings ) {
 	);
 
 	return array_merge( $settings, $new_settings );
-
-}
-
-//* Replace the default notice with the custom notice when one is entered
-add_filter( 'edd_ftbg_gift_notice_text', 'edd_ftbg_custom_display_message', 15, 2 );
-function edd_ftbg_custom_display_message( $message, $code ) {
-
-	if ( edd_get_option( 'edd_ftbg_first_time_buyer_display_message' ) )
-		$message = str_replace( '{code}', $code, edd_get_option( 'edd_ftbg_first_time_buyer_display_message' ) );
-
-	return $message;
 
 }
