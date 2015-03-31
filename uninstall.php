@@ -11,9 +11,9 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) )
     exit();
 
-function edd_ftbg_run_uninstall() {
+$settings = edd_get_settings();
 
-	$settings = edd_get_settings();
+if ( $settings ) {
 
 	foreach ( $settings as $key => $val ) {
 
@@ -23,5 +23,3 @@ function edd_ftbg_run_uninstall() {
 	}
 
 }
-
-edd_ftbg_run_uninstall();
