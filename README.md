@@ -30,6 +30,4 @@ Once installed and activated, the plugin adds its settings to the Misc tab in th
 
 <em>Are there any developer hooks that I can utilize?</em>
 
-Yes! The following are hooks that you can use to modify something within the plugin or run your own code:
-
-<script src="https://gist.github.com/EngageWP/489064af42cd939a92e4.js"></script>
+Yes! [Here is a list of hooks](https://gist.github.com/EngageWP/489064af42cd939a92e4) that you can use to modify something within the plugin or run your own code.
