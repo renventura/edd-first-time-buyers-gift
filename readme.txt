@@ -6,6 +6,7 @@ Tested up to: 4.2
 Stable tag: 1.0
 License: GPL 2.0+
 License URI: http://www.opensource.org/licenses/gpl-license.php
+Donate link: http://www.engagewp.com/donate/
 
 Increase customer satisfaction and repeat business by generating and assigning discounts for buyers after their first purchase.
 
