@@ -174,7 +174,7 @@ add_action( 'plugins_loaded', 'edd_ftbg_run_if_enabled' );
 function edd_ftbg_run_if_enabled() {
 
 	//* Instantiate the class
-	if ( is_edd_ftbg_enabled() && is_plugin_active( 'easy-digital-downloads/easy-digital-downloads.php' ) )
+	if ( function_exists( 'is_edd_ftbg_enabled' ) && is_edd_ftbg_enabled() )
 		$EDD_FTBG = new EDD_First_Time_Buyers_Gift;
 
 }
