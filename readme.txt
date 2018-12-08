@@ -1,12 +1,11 @@
 === EDD First Time Buyer's Gift ===
 
-Contributors: EngageWP
+Contributors: renventura
 Tags: Easy Digital Downloads, Discounts, Coupons
-Tested up to: 4.2
+Tested up to: 5.0
 Stable tag: 1.0
 License: GPL 2.0+
 License URI: http://www.opensource.org/licenses/gpl-license.php
-Donate link: http://www.engagewp.com/donate/
 
 Increase customer satisfaction and repeat business by generating and assigning discounts for buyers after their first purchase.
 
@@ -35,7 +34,7 @@ Once installed and activated, the plugin adds its settings to the Misc tab in th
 
 Yes! The following are hooks that you can use to modify something within the plugin or run your own code:
 
-<script src="https://gist.github.com/EngageWP/489064af42cd939a92e4.js"></script>
+<script src="https://gist.github.com/renventura/489064af42cd939a92e4.js"></script>
 
 == Screenshots ==
 

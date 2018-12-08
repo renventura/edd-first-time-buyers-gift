@@ -7,15 +7,7 @@
  */
 
 if ( function_exists( 'edd_get_option' ) && ! function_exists( 'is_edd_ftbg_enabled' ) ) {
-
 	function is_edd_ftbg_enabled() {
-
-		if ( edd_get_option( 'edd_ftbg_enable_gifts' ) )
-			return true;
-
-		else
-			return false;
-
+		return edd_get_option( 'edd_ftbg_enable_gifts' );
 	}
-
 }

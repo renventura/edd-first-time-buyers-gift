@@ -2,20 +2,18 @@
 
 /**
  * Plugin Name: EDD First Time Buyer's Gift
- * Plugin URI: http://www.engagewp.com/
+ * Plugin URI: https://renventura.com
  * Description: Increase customer satisfaction and repeat business by generating and assigning discounts for buyers after their first purchase.
  * Version: 1.0
  * Author: Ren Ventura
- * Author URI: http://www.engagewp.com/
+ * Author URI: https://renventura.com
  *
  * License: GPL 2.0+
  * License URI: http://www.opensource.org/licenses/gpl-license.php
- *
  */
 
  /*
-
-	Copyright 2015  Ren Ventura, EngageWP.com
+	Copyright 2015  Ren Ventura, <renventura.com>
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License, version 2, as
@@ -78,9 +76,7 @@ class EDD_First_Time_Buyers_Gift {
 			deactivate_plugins( EDD_FTBG_PLUGIN_BASENAME );
 
 			wp_die( sprintf( __( 'The EDD First Time Buyer\'s Gift requires Easy Digital Downloads to be active.', 'edd' ) ) );
-
 		}
-
 	}
 
 	/**
@@ -113,12 +109,13 @@ class EDD_First_Time_Buyers_Gift {
 			$this->discount_code = substr( md5( $this->user_email ), 0, 18 );
 
 			//* Bail if the discount exists
-			if ( edd_get_discount_by_code( $this->discount_code ) )
+			if ( edd_get_discount_by_code( $this->discount_code ) ) {
 				return;
+			}
 
 			//* Default settings
-			$amount = !edd_get_option( 'edd_ftbg_first_time_buyer_discount_amount' ) ? 1 : edd_get_option( 'edd_ftbg_first_time_buyer_discount_amount' );
-			$type = !edd_get_option( 'edd_ftbg_first_time_buyer_discount_type' ) ? 'flat' : edd_get_option( 'edd_ftbg_first_time_buyer_discount_type' );
+			$amount = ! edd_get_option( 'edd_ftbg_first_time_buyer_discount_amount' ) ? 1 : edd_get_option( 'edd_ftbg_first_time_buyer_discount_amount' );
+			$type = ! edd_get_option( 'edd_ftbg_first_time_buyer_discount_type' ) ? 'flat' : edd_get_option( 'edd_ftbg_first_time_buyer_discount_type' );
 
 			//* Assemble the discount
 			$default_discount_args = array(
@@ -146,24 +143,18 @@ class EDD_First_Time_Buyers_Gift {
 			//* After the discount has been created
 			$user_id = $this->user_id;
 			$discount_code = $this->discount_code;
+
 			do_action( 'edd_ftbg_after_discount_registered', $user_id, $discount_code );
-
 		}
-
 	}
 
 	public function edd_ftbg_add_email_tag() {
-
 		edd_add_email_tag( 'edd_ftbg_gift_notice', 'Insert the custom message you entered to display an eligible first-time buyer\'s discount code and message.', array( $this, 'edd_ftbg_add_email_tag_callback' ) );
-
 	}
 
 	public function edd_ftbg_add_email_tag_callback() {
-
 		return do_shortcode( '[edd_ftbg_gift_notice]' );
-
 	}
-
 }
 
 /**
@@ -174,7 +165,7 @@ add_action( 'plugins_loaded', 'edd_ftbg_run_if_enabled' );
 function edd_ftbg_run_if_enabled() {
 
 	//* Instantiate the class
-	if ( function_exists( 'is_edd_ftbg_enabled' ) && is_edd_ftbg_enabled() )
+	if ( function_exists( 'is_edd_ftbg_enabled' ) && is_edd_ftbg_enabled() ) {
 		$EDD_FTBG = new EDD_First_Time_Buyers_Gift;
-
+	}
 }

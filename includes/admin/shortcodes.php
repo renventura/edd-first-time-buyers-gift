@@ -30,11 +30,11 @@ function edd_ftbg_gift_notice_shortcode() {
 		$amount = edd_get_discount_amount( $discount_id );
 		$type = edd_get_discount_type( $discount_id );
 
-		if ( $type == 'percent' )
+		if ( $type == 'percent' ) {
 			$formatted_discount = $amount . '%';
-
-		else
+		} else {
 			$formatted_discount = edd_currency_filter( edd_format_amount( $amount ) );
+		}
 
 		ob_start(); ?>
 
@@ -46,7 +46,10 @@ function edd_ftbg_gift_notice_shortcode() {
 
 		$message = apply_filters( 'edd_ftbg_gift_notice_text', $message, $code, $formatted_discount );
 
-	} else $message = null;
+	} else {
+
+		$message = null;
+	}
 
 	return $message;
 
@@ -63,9 +66,7 @@ function edd_ftbg_custom_display_message( $message, $code, $formatted_discount )
 		$replacements = array( $code, $formatted_discount );
 
 		$message = str_replace( $tags, $replacements, edd_get_option( 'edd_ftbg_first_time_buyer_display_message' ) );
-
 	}
 
 	return $message;
-
 }

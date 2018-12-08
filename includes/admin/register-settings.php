@@ -28,7 +28,9 @@ function edd_ftbg_add_misc_settings( $settings ) {
 		<li><?php _e( '{formatted_discount} - Outputs the formatted discount value (i.e. 15% or $10)', 'edd' ); ?></li>
 	</ul>
 
-	<?php $custom_description_instructions = ob_get_clean();
+	<?php 
+
+	$custom_description_instructions = ob_get_clean();
 
 	$new_settings = array(
 
@@ -89,5 +91,4 @@ function edd_ftbg_add_misc_settings( $settings ) {
 	);
 
 	return array_merge( $settings, $new_settings );
-
 }
