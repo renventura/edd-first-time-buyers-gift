@@ -4,7 +4,7 @@
  * Plugin Name: EDD First Time Buyer's Gift
  * Plugin URI: https://renventura.com
  * Description: Increase customer satisfaction and repeat business by generating and assigning discounts for buyers after their first purchase.
- * Version: 1.0
+ * Version: 1.1
  * Author: Ren Ventura
  * Author URI: https://renventura.com
  *
@@ -45,7 +45,6 @@ include_once 'includes/admin/shortcodes.php';
 
 /**
  *	Main plugin class
- *	@since 1.0
  */
 class EDD_First_Time_Buyers_Gift {
 
@@ -54,7 +53,7 @@ class EDD_First_Time_Buyers_Gift {
 	public function __construct() {
 
 		//* Plugin constants
-		define( 'EDD_FTBG_VERSION', '1.0' );
+		define( 'EDD_FTBG_VERSION', '1.1' );
 		define( 'EDD_FTBG_PLUGIN_FILE', __FILE__ );
 		define( 'EDD_FTBG_PLUGIN_BASENAME', untrailingslashit( plugin_basename( __FILE__ ) ) );
 
@@ -159,7 +158,6 @@ class EDD_First_Time_Buyers_Gift {
 
 /**
  *	Run the functionality if the setting is enabled
- *	@since 1.0
  */
 add_action( 'plugins_loaded', 'edd_ftbg_run_if_enabled' );
 function edd_ftbg_run_if_enabled() {

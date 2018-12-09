@@ -3,7 +3,7 @@
 Contributors: renventura
 Tags: Easy Digital Downloads, Discounts, Coupons
 Tested up to: 5.0
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPL 2.0+
 License URI: http://www.opensource.org/licenses/gpl-license.php
 
