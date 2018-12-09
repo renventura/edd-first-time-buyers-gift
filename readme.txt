@@ -42,5 +42,8 @@ Yes! The following are hooks that you can use to modify something within the plu
 
 == Changelog ==
 
+= 1.1 =
+* Some cleanup
+
 = 1.0 =
 * Initial version
